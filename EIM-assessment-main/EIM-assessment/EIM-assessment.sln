@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EIM-assessment", "EIM-assessment.csproj", "{08F3C4B6-9175-4166-B296-117DCDA1ECBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIM-assessment.Tests", "..\EIM-assessment.Tests\EIM-assessment.Tests.csproj", "{D3EC1037-9A10-4BEA-987D-CB4C115476C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08F3C4B6-9175-4166-B296-117DCDA1ECBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08F3C4B6-9175-4166-B296-117DCDA1ECBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08F3C4B6-9175-4166-B296-117DCDA1ECBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08F3C4B6-9175-4166-B296-117DCDA1ECBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EC1037-9A10-4BEA-987D-CB4C115476C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EC1037-9A10-4BEA-987D-CB4C115476C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EC1037-9A10-4BEA-987D-CB4C115476C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EC1037-9A10-4BEA-987D-CB4C115476C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0402141A-EE8E-4813-BC0C-BB1568DCB49D}
+	EndGlobalSection
+EndGlobal
