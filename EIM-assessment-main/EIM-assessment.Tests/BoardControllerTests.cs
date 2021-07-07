@@ -15,8 +15,8 @@ namespace EIM_assessment.Tests
         [SetUp]
         public void Setup()
         {
-            controller = new BoardsController(boardRepoMock.Object);
             boardRepoMock = new Mock<IBoardRepository>();
+            controller = new BoardsController(boardRepoMock.Object);
         }
 
         [Test]
