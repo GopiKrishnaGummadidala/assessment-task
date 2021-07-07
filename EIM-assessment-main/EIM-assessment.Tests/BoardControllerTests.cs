@@ -84,5 +84,25 @@ namespace EIM_assessment.Tests
 
             boardRepoMock.Verify(x => x.SavePostToBoard(post), Times.Once);
         }
+
+        [Test]
+        public void Post_Null_SavePostToBoard()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() =>
+            {
+              return controller.SavePostToBoard(null);
+            });
+        }
+
+        [Test]
+        public async Task Get_PostsOfBoard()
+        {
+            var posts = new List<PostIt> { new PostIt() { BoardId = 1, Id = 1, Text = "Sample post", CreatedAt = DateTime.Now }, new PostIt() { BoardId = 1, Id = 2, Text = "Sample post 2", CreatedAt = DateTime.Now } };
+            boardRepoMock.Setup(x => x.GetPosts(It.IsAny<int>())).Returns(posts);
+
+            var res = controller.GetPosts(1);
+
+            Assert.AreEqual(res.Count, posts.Count);
+        }
     }
 }

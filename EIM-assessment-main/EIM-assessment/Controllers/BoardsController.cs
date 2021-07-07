@@ -33,11 +33,12 @@ namespace EIM_assessment.Controllers
         [HttpPost("{post}")]
         public async Task<bool> SavePostToBoard(PostIt post)
         {
+            if (post == null) throw new ArgumentNullException(nameof(post));
             return await _boardRepository.SavePostToBoard(post);
         }
 
         [HttpGet("{boardId}")]
-        public IEnumerable<PostIt> SavePostToBoard(int boardId)
+        public List<PostIt> GetPosts(int boardId)
         {
             if (boardId <= 0) throw new ArgumentOutOfRangeException(nameof(boardId), "Board ID must be greater than zero.");
             return _boardRepository.GetPosts(boardId);
