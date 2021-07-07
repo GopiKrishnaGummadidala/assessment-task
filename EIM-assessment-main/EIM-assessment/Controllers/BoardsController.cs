@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EIM_assessment.Models;
 using EIM_assessment.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace EIM_assessment.Controllers
 {
@@ -13,17 +11,47 @@ namespace EIM_assessment.Controllers
     [Route("[controller]")]
     public class BoardsController : ControllerBase
     {
-        public IBoardRepository boards;
+        private readonly IBoardRepository _boardRepository;
 
-        public BoardsController(IBoardRepository boards)
+        public BoardsController(IBoardRepository boardRepository)
         {
-            this.boards = boards;
+            this._boardRepository = boardRepository;
         }
 
         [HttpGet]
         public IEnumerable<Board> GetAll()
         {
-            return boards.GetAll();
+            return _boardRepository.GetAll();
+        }
+
+        [HttpPost]
+        public async Task<bool> Post(List<Board> boards)
+        {
+            return await _boardRepository.SaveBoards(boards);
+        }
+
+        [HttpPost("{post}")]
+        public async Task<bool> SavePostToBoard(PostIt post)
+        {
+            return await _boardRepository.SavePostToBoard(post);
+        }
+
+        [HttpGet("{boardId}")]
+        public IEnumerable<PostIt> SavePostToBoard(int boardId)
+        {
+            return _boardRepository.GetPosts(boardId);
+        }
+
+        [HttpDelete("{postId}")]
+        public IEnumerable<PostIt> DeletePost(int postId)
+        {
+            return _boardRepository.DeletePost(postId);
+        }
+
+        [HttpDelete("{boardId}")]
+        public IEnumerable<Board> DeleteBoard(int boardId)
+        {
+            return _boardRepository.DeleteBoard(boardId);
         }
 
         [HttpGet("{id}")]
@@ -31,7 +59,7 @@ namespace EIM_assessment.Controllers
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Board ID must be greater than zero.");
 
-            return boards.Find(id);
+            return _boardRepository.Find(id);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace EIM_assessment.Models
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Name { get; set; }
+
+        public List<PostIt> Posts { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace EIM_assessment.Models
 {
     public class PostIt
     {
+        public int BoardId { get; set; }
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Text { get; set; }
