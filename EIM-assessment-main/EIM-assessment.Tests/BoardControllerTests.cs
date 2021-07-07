@@ -106,7 +106,7 @@ namespace EIM_assessment.Tests
         }
 
         [Test]
-        public void Delete_ZeroBoardId_DeletePost()
+        public void DeletePost_ZeroBoardId_ThrowsOutOfRangeException()
         {
             Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
             {
@@ -114,12 +114,20 @@ namespace EIM_assessment.Tests
             });
         }
         [Test]
-        public void Delete_ZeroPostId_DeletePost()
+        public void DeletePost_ZeroPostId_ThrowsOutOfRangeException()
         {
             Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
             {
                 return controller.DeletePost(1, 0);
             });
+        }
+
+        [Test]
+        public async Task DeletePost_Positive_DeletePost()
+        {
+            boardRepoMock.Setup(x => x.DeletePost(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(true);
+            var res = await controller.DeletePost(1, 1);
+            Assert.IsTrue(res);
         }
     }
 }
