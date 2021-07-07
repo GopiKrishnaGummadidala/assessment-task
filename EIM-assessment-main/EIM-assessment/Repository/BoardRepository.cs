@@ -14,8 +14,8 @@ namespace EIM_assessment.Repository
         Task<bool> SaveBoards(List<Board> boards);
         Task<bool> SavePostToBoard(PostIt post);
         List<PostIt> GetPosts(int boardId);
-        IQueryable<PostIt> DeletePost(int postId);
-        IQueryable<Board> DeleteBoard(int boardId);
+        Task<bool> DeletePost(int boardId, int postId);
+        Task<bool> DeleteBoard(int boardId);
         Board Find(int id);
 
     }
@@ -55,31 +55,36 @@ namespace EIM_assessment.Repository
             return await SaveToFile();
         }
 
-        public bool SavePostToBoard(PostIt post)
+        public async Task<bool> SavePostToBoard(PostIt post)
         {
-            throw new NotImplementedException();
+            var board = _boards.FirstOrDefault(b => b.Id == post.BoardId);
+            board.Posts.Add(post);
+            return await SaveToFile();
         }
 
         public List<PostIt> GetPosts(int boardId)
         {
-            return boards.FirstOrDefault(b => b.Id == boardId)?.Posts;
+            return _boards.FirstOrDefault(b => b.Id == boardId)?.Posts;
         }
 
-        public IQueryable<PostIt> DeletePost(int postId)
+        public async Task<bool> DeletePost(int boardId, int postId)
         {
-            throw new NotImplementedException();
+            var board = _boards.FirstOrDefault(b => b.Id == boardId);
+            board.Posts = board.Posts.Where(p => p.Id != postId).ToList();
+            return await SaveToFile();
         }
 
-        public IQueryable<Board> DeleteBoard(int boardId)
+        public async Task<bool> DeleteBoard(int boardId)
         {
-            throw new NotImplementedException();
+            _boards = _boards.Where(b => b.Id != boardId).ToList();
+            return await SaveToFile();
         }
 
         private async Task<bool> SaveToFile()
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(boards);
+                var json = System.Text.Json.JsonSerializer.Serialize(_boards);
                 var filePath = Application.Configuration["DataFile"];
                 if (!Path.IsPathRooted(filePath)) filePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
 

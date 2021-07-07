@@ -42,16 +42,16 @@ namespace EIM_assessment.Controllers
             return _boardRepository.GetPosts(boardId);
         }
 
-        [HttpDelete("{postId}")]
-        public IEnumerable<PostIt> DeletePost(int postId)
+        [HttpDelete("{boardId}/{postId}")]
+        public async Task<bool> DeletePost(int boardId, int postId)
         {
-            return _boardRepository.DeletePost(postId);
+            return await _boardRepository.DeletePost(boardId, postId);
         }
 
         [HttpDelete("{boardId}")]
-        public IEnumerable<Board> DeleteBoard(int boardId)
+        public async Task<bool> DeleteBoard(int boardId)
         {
-            return _boardRepository.DeleteBoard(boardId);
+            return await _boardRepository.DeleteBoard(boardId);
         }
 
         [HttpGet("{id}")]
