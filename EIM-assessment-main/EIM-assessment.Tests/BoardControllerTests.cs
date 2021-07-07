@@ -129,5 +129,21 @@ namespace EIM_assessment.Tests
             var res = await controller.DeletePost(1, 1);
             Assert.IsTrue(res);
         }
+
+        [Test]
+        public void DeleteBoard_ZeroBoardId_ThrowsOutOfRangeException()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+            {
+                return controller.DeleteBoard(0);
+            });
+        }
+
+        public async Task DeleteBoard_Positive()
+        {
+            boardRepoMock.Setup(x => x.DeleteBoard(It.IsAny<int>())).ReturnsAsync(true);
+            var res = await controller.DeleteBoard(1);
+            Assert.IsTrue(res);
+        }
     }
 }
