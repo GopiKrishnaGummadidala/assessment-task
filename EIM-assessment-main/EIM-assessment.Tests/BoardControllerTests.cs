@@ -9,30 +9,33 @@ namespace EIM_assessment.Tests
 {
     public class BoardControllerTests
     {
+        private BoardsController controller;
+        private Mock<IBoardRepository> boardRepoMock;
+
+        [SetUp]
+        public void Setup()
+        {
+            controller = new BoardsController(boardRepoMock.Object);
+            boardRepoMock = new Mock<IBoardRepository>();
+        }
+
         [Test]
         public void Constructor_CreatesController()
         {
-            var boardRepo = Mock.Of<IBoardRepository>();
-            var controller = new BoardsController(boardRepo);
+            var controller = new BoardsController(boardRepoMock.Object);
             Assert.NotNull(controller);
         }
 
         [Test]
         public void GetAll_DoesLookupThroughRepository()
         {
-            var boardRepo = new Mock<IBoardRepository>();
-            var controller = new BoardsController(boardRepo.Object);
-
             controller.GetAll();
-
-            boardRepo.Verify(x => x.GetAll(), Times.Once);
+            boardRepoMock.Verify(x => x.GetAll(), Times.Once);
         }
 
         [Test]
         public void Find_NegativeId_ThrowsOutOfRangeException()
         {
-            var boardRepo = Mock.Of<IBoardRepository>();
-            var controller = new BoardsController(boardRepo);
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 controller.Find(-1);
@@ -42,8 +45,6 @@ namespace EIM_assessment.Tests
         [Test]
         public void Find_ZeroId_ThrowsOutOfRangeException()
         {
-            var boardRepo = Mock.Of<IBoardRepository>();
-            var controller = new BoardsController(boardRepo);
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 controller.Find(0);
@@ -53,14 +54,11 @@ namespace EIM_assessment.Tests
         [Test]
         public void Find_ValidId_DoesLookupThroughRepository()
         {
-            var boardRepo = new Mock<IBoardRepository>();
-            boardRepo.Setup(x => x.Find(It.IsAny<int>())).Returns(new Board());
-
-            var controller = new BoardsController(boardRepo.Object);
+            boardRepoMock.Setup(x => x.Find(It.IsAny<int>())).Returns(new Board());
 
             controller.Find(1);
 
-            boardRepo.Verify(x => x.Find(1), Times.Once);
+            boardRepoMock.Verify(x => x.Find(1), Times.Once);
         }
     }
 }

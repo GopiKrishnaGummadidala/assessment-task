@@ -39,18 +39,22 @@ namespace EIM_assessment.Controllers
         [HttpGet("{boardId}")]
         public IEnumerable<PostIt> SavePostToBoard(int boardId)
         {
+            if (boardId <= 0) throw new ArgumentOutOfRangeException(nameof(boardId), "Board ID must be greater than zero.");
             return _boardRepository.GetPosts(boardId);
         }
 
         [HttpDelete("{boardId}/{postId}")]
         public async Task<bool> DeletePost(int boardId, int postId)
         {
+            if (boardId <= 0) throw new ArgumentOutOfRangeException(nameof(boardId), "Board ID must be greater than zero.");
+            if (postId <= 0) throw new ArgumentOutOfRangeException(nameof(postId), "Board ID must be greater than zero.");
             return await _boardRepository.DeletePost(boardId, postId);
         }
 
         [HttpDelete("{boardId}")]
         public async Task<bool> DeleteBoard(int boardId)
         {
+            if (boardId <= 0) throw new ArgumentOutOfRangeException(nameof(boardId), "Board ID must be greater than zero.");
             return await _boardRepository.DeleteBoard(boardId);
         }
 
