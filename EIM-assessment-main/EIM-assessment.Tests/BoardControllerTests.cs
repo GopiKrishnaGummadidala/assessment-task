@@ -95,7 +95,7 @@ namespace EIM_assessment.Tests
         }
 
         [Test]
-        public async Task Get_PostsOfBoard()
+        public void Get_PostsOfBoard()
         {
             var posts = new List<PostIt> { new PostIt() { BoardId = 1, Id = 1, Text = "Sample post", CreatedAt = DateTime.Now }, new PostIt() { BoardId = 1, Id = 2, Text = "Sample post 2", CreatedAt = DateTime.Now } };
             boardRepoMock.Setup(x => x.GetPosts(It.IsAny<int>())).Returns(posts);
@@ -103,6 +103,23 @@ namespace EIM_assessment.Tests
             var res = controller.GetPosts(1);
 
             Assert.AreEqual(res.Count, posts.Count);
+        }
+
+        [Test]
+        public void Delete_ZeroBoardId_DeletePost()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+            {
+              return  controller.DeletePost(0,1);
+            });
+        }
+        [Test]
+        public void Delete_ZeroPostId_DeletePost()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+            {
+                return controller.DeletePost(1, 0);
+            });
         }
     }
 }
